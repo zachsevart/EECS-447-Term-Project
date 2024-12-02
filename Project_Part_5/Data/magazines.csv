@@ -1,0 +1,31 @@
+magazine_id,issue_number,title,publisher,publication_date,availability_status
+1,3195,Time: Person of the Year - You,Time Inc,2006-12-25,Available
+2,8058,National Geographic: Secrets of the Pharaohs,National Geographic Society,2023-04-01,Available
+3,4378,The New Yorker: Summer Fiction,Conde Nast,2022-07-15,Available
+4,9912,Vogue: Met Gala Special,Conde Nast,2023-05-01,Available
+5,3315,Scientific American: The Quantum Universe,Springer Nature,2024-01-01,Available
+6,5402,Forbes: Billionaires Edition,Forbes Media,2023-03-01,Available
+7,3120,Wired: The AI Revolution,Condé Nast,2023-08-01,Available
+8,7865,People: 50 Most Beautiful People,Dotdash Meredith,2023-06-01,Available
+9,9843,Popular Science: Space Exploration Special,Camden Media,2023-11-01,Available
+10,1376,Rolling Stone: Top 100 Albums of All Time,Penske Media Corporation,2023-10-01,Available
+11,2245,Time: 100 Most Influential People,Time Inc,2015-04-01,Available
+12,6709,National Geographic: Wonders of the Ocean,National Geographic Society,2022-06-01,Available
+13,5401,The New Yorker: Fall Preview,Conde Nast,2023-09-20,Available
+14,9923,Vogue: Fall Fashion Issue,Conde Nast,2023-09-01,Available
+15,4155,Scientific American: Climate Change Report,Springer Nature,2022-11-01,Available
+16,5532,Forbes: Tech Titans Edition,Forbes Media,2021-07-01,Available
+17,4521,Wired: The Future of Work,Condé Nast,2022-03-01,Available
+18,7982,People: Sexiest Man Alive,Dotdash Meredith,2022-11-01,Available
+19,9852,Popular Science: The Solar Revolution,Camden Media,2023-02-01,Available
+20,1390,Rolling Stone: Greatest Guitarists of All Time,Penske Media Corporation,2022-12-01,Available
+21,3320,Time: Space Exploration Special,Time Inc,2019-07-01,Available
+22,8092,National Geographic: Mysteries of Ancient Egypt,National Geographic Society,2021-01-01,Available
+23,5412,The New Yorker: Political Satire Issue,Conde Nast,2021-10-01,Available
+24,9934,Vogue: Spring Style Preview,Conde Nast,2023-03-01,Available
+25,4376,Scientific American: AI and the Brain,Springer Nature,2021-05-01,Available
+26,5545,Forbes: Women in Power,Forbes Media,2023-10-01,Available
+27,4539,Wired: Cryptocurrency Explained,Condé Nast,2021-12-01,Available
+28,7998,People: Best Celebrity Weddings,Dotdash Meredith,2022-08-01,Available
+29,9863,Popular Science: Renewable Energy Focus,Camden Media,2022-09-01,Available
+30,1403,Rolling Stone: Best Concerts of the Decade,Penske Media Corporation,2021-06-01,Available
