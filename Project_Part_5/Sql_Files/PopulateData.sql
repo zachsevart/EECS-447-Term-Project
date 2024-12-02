@@ -25,9 +25,15 @@ FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas
 LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
 (unique_id,name,contact_info,membership_type,account_status);
 
-
 LOAD DATA INFILE '/var/lib/mysql-files/membership_type.csv' -- Load data in from a csv file to the "Magazine" relation
 INTO TABLE MembershipType 
 FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas
 LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
 (membership_type, borrowing_limit, fee_structure);
+
+LOAD DATA INFILE '/var/lib/mysql-files/book_copy.csv' -- Load data in from a csv file to the "Magazine" relation
+INTO TABLE Book_Copy 
+FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas
+LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
+(copy_id, ISBN, status);
+
