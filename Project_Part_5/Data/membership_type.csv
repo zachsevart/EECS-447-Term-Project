@@ -1,3 +1,4 @@
+membership_type, borrowing_limit, fee_structure
 Student,6,2
 Senior,4,2
 Regular,3,1
