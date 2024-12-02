@@ -1,7 +1,7 @@
-CREATE DATABASE IF NOT EXISTS project;
+CREATE DATABASE IF NOT EXISTS project; -- Create Database called project and set to use it
 USE project;
 
-CREATE TABLE IF NOT EXISTS Book (
+CREATE TABLE IF NOT EXISTS Book ( -- Relation to store books, ISBN is primary key
     ISBN VARCHAR(20) PRIMARY KEY, 
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS Book_Copy (
     FOREIGN KEY (ISBN) REFERENCES Book(ISBN)
 );
 
-CREATE TABLE IF NOT EXISTS DigitalMedia (
+CREATE TABLE IF NOT EXISTS DigitalMedia ( -- Relation to store digital media, Digital Media ID is the primary key
     digital_media_id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS DigitalMedia (
     availability_status VARCHAR(20) DEFAULT 'Available' CHECK (availability_status IN ('Available', 'Borrowed', 'Reserved'))
 );
 
-CREATE TABLE IF NOT EXISTS Magazine (
+CREATE TABLE IF NOT EXISTS Magazine ( -- Relation to store magazines, magazine ID is the primary key
     magazine_id SERIAL PRIMARY KEY,
     issue_number INT NOT NULL CHECK(issue_number > 0),
     title VARCHAR(255) NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS MagazineBorrowing (
     FOREIGN KEY (item_id) REFERENCES Magazine(magazine_id)
 );
 
-CREATE TABLE IF NOT EXISTS Fee (
+CREATE TABLE IF NOT EXISTS Fee ( -- Relation to store fee information about checked out items, fee ID is the primary key
     fee_id SERIAL PRIMARY KEY, 
     client_id BIGINT UNSIGNED NOT NULL,
     item_type VARCHAR(50) NOT NULL, 
