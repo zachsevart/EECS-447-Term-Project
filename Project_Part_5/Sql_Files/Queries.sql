@@ -41,7 +41,7 @@ WHERE Fee.amount > 0;
 
 
 
--- List Reserved but not loaned out items
+-- List Reserved but not loaned out items (TODO: Add magazine and digital media to this as well)
 SELECT 
     Book.ISBN AS item_id, 
     Book.title AS title, 
@@ -80,49 +80,92 @@ WHERE Fee.fee_date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
 GROUP BY MembershipType.membership_type;
 
 
-
--- Produce a list of clients who have exceeded their borrowing limits.
-SELECT Client.name, COUNT(*) AS borrowed_items, MembershipType.borrowing_limit
-FROM Client
-JOIN MembershipType ON Client.membership_type = MembershipType.membership_type
-JOIN (
-    SELECT client_id FROM BookBorrowing WHERE return_date IS NULL
-    UNION ALL
-    SELECT client_id FROM DigitalMediaBorrowing WHERE return_date IS NULL
-    UNION ALL
-    SELECT client_id FROM MagazineBorrowing WHERE return_date IS NULL
-) AS Loans ON Client.unique_id = Loans.client_id
-GROUP BY Client.unique_id, MembershipType.borrowing_limit
-HAVING borrowed_items > MembershipType.borrowing_limit;
-
-
-
--- Determine the most frequently borrowed items by each client type
-SELECT  
-    Client.membership_type, 
-    CASE 
-        WHEN bb.item_id IS NOT NULL THEN 'Book'
-        WHEN dmb.item_id IS NOT NULL THEN 'Digital Media'
-        WHEN mb.item_id IS NOT NULL THEN 'Magazine'
-    END AS item_type, 
-    CASE 
-        WHEN bb.item_id IS NOT NULL THEN b.title
-        WHEN dmb.item_id IS NOT NULL THEN dm.title
-        WHEN mb.item_id IS NOT NULL THEN m.title
-    END AS item_title, 
-    COUNT(*) AS borrow_count
-FROM  
+-- Produce a list of clients who are at their borrowing limits.
+SELECT 
+    Client.name,
+    COUNT(*) AS borrowed_items, 
+    MembershipType.borrowing_limit
+FROM 
     Client
-LEFT JOIN BookBorrowing bb ON Client.unique_id = bb.client_id
-LEFT JOIN DigitalMediaBorrowing dmb ON Client.unique_id = dmb.client_id
-LEFT JOIN MagazineBorrowing mb ON Client.unique_id = mb.client_id
-LEFT JOIN Book_Copy bc ON bb.item_id = bc.copy_id
-LEFT JOIN Book b ON bc.ISBN = b.ISBN
-LEFT JOIN DigitalMedia dm ON dmb.item_id = dm.digital_media_id
-LEFT JOIN Magazine m ON mb.item_id = m.magazine_id
-GROUP BY Client.membership_type, item_type, item_title
-ORDER BY Client.membership_type, borrow_count DESC
-LIMIT 0, 1000;
+JOIN 
+    MembershipType ON Client.membership_type = MembershipType.membership_type
+JOIN (
+    SELECT client_id 
+    FROM BookBorrowing 
+    WHERE return_date IS NULL
+    UNION ALL
+    SELECT client_id 
+    FROM DigitalMediaBorrowing 
+    WHERE return_date IS NULL
+    UNION ALL
+    SELECT client_id 
+    FROM MagazineBorrowing 
+    WHERE return_date IS NULL
+) AS Loans 
+ON Client.unique_id = Loans.client_id
+GROUP BY 
+    Client.unique_id, MembershipType.borrowing_limit
+HAVING 
+    borrowed_items = MembershipType.borrowing_limit;
+
+
+
+
+-- List the top 3 borrowed items for each membership type and item type
+WITH RankedItems AS (
+    SELECT
+        Client.membership_type, 
+        CASE 
+            WHEN bb.item_id IS NOT NULL THEN 'Book'
+            WHEN dmb.item_id IS NOT NULL THEN 'Digital Media'
+            WHEN mb.item_id IS NOT NULL THEN 'Magazine'
+        END AS item_type, 
+        CASE 
+            WHEN bb.item_id IS NOT NULL THEN b.title
+            WHEN dmb.item_id IS NOT NULL THEN dm.title
+            WHEN mb.item_id IS NOT NULL THEN m.title
+        END AS item_title, 
+        COUNT(*) AS borrow_count,
+        ROW_NUMBER() OVER (
+            PARTITION BY Client.membership_type, 
+                         CASE 
+                             WHEN bb.item_id IS NOT NULL THEN 'Book'
+                             WHEN dmb.item_id IS NOT NULL THEN 'Digital Media'
+                             WHEN mb.item_id IS NOT NULL THEN 'Magazine'
+                         END
+            ORDER BY COUNT(*) DESC
+        ) AS `rank`
+    FROM  
+        Client
+    LEFT JOIN BookBorrowing bb ON Client.unique_id = bb.client_id
+    LEFT JOIN DigitalMediaBorrowing dmb ON Client.unique_id = dmb.client_id
+    LEFT JOIN MagazineBorrowing mb ON Client.unique_id = mb.client_id
+    LEFT JOIN Book_Copy bc ON bb.item_id = bc.copy_id
+    LEFT JOIN Book b ON bc.ISBN = b.ISBN
+    LEFT JOIN DigitalMedia dm ON dmb.item_id = dm.digital_media_id
+    LEFT JOIN Magazine m ON mb.item_id = m.magazine_id
+    GROUP BY 
+        Client.membership_type, 
+        item_type, 
+        item_title
+)
+SELECT 
+    membership_type, 
+    item_type, 
+    item_title, 
+    borrow_count
+FROM 
+    RankedItems
+WHERE 
+    `rank` <= 3
+ORDER BY 
+    membership_type, 
+    item_type, 
+    borrow_count DESC;
+
+
+
+
 
 
 
