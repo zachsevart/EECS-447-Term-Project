@@ -13,7 +13,7 @@ SELECT digital_media_id, title, author FROM digitalmedia WHERE availability_stat
 SELECT magazine_id, issue_number, title, publisher FROM magazine WHERE availability_status = 'Available';
 
 
--- Find total Number of items loaned out by each membership type
+-- Find total number of items loaned out by each membership type
 SELECT Client.membership_type, COUNT(Loaned.client_id) AS total_loaned
 FROM Client LEFT JOIN
 (SELECT client_id from bookborrowing
