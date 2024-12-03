@@ -37,3 +37,9 @@ FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas
 LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
 (copy_id, ISBN, status);
 
+LOAD DATA INFILE '/var/lib/mysql-files/book_borrowing.csv' -- Load data in from a csv file to the "Magazine" relation
+INTO TABLE BookBorrowing
+FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas
+LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
+IGNORE 1 ROWS
+(client_id, item_id, borrow_date, due_date, return_date);
