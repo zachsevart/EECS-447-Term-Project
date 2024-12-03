@@ -90,6 +90,7 @@ CREATE TABLE IF NOT EXISTS Fee ( -- Relation to store fee information about chec
     item_type VARCHAR(50) NOT NULL, 
     amount DECIMAL(10, 2) NOT NULL CHECK (amount > 0),
     fee_date DATE NOT NULL,
+    paid_on_date DATE,
     FOREIGN KEY (client_id) REFERENCES Client(unique_id),
     CONSTRAINT fee_item_type_chk CHECK (item_type IN ('book', 'digital_media', 'magazine')) 
 );

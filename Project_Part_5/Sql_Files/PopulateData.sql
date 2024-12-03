@@ -19,19 +19,19 @@ LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
 IGNORE 1 ROWS -- This line ignores the header and inserts just the data
 (digital_media_id, title, author, publisher, publication_year, genre, availability_status);
 
-LOAD DATA INFILE '/var/lib/mysql-files/clients.csv' -- Load data in from a csv file to the "Magazine" relation
+LOAD DATA INFILE '/var/lib/mysql-files/clients.csv' -- Load data in from a csv file to the "clients" relation
 INTO TABLE Client 
 FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas
 LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
 (unique_id,name,contact_info,membership_type,account_status);
 
-LOAD DATA INFILE '/var/lib/mysql-files/membership_type.csv' -- Load data in from a csv file to the "Magazine" relation
+LOAD DATA INFILE '/var/lib/mysql-files/membership_type.csv' -- Load data in from a csv file to the "membership_type" relation
 INTO TABLE MembershipType 
 FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas
 LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
 (membership_type, borrowing_limit, fee_structure);
 
-LOAD DATA INFILE '/var/lib/mysql-files/book_copy.csv' -- Load data in from a csv file to the "Magazine" relation
+LOAD DATA INFILE '/var/lib/mysql-files/book_copy.csv' -- Load data in from a csv file to the "Book_copy" relation
 INTO TABLE Book_Copy 
 FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas
 LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
