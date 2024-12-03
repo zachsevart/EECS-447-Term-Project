@@ -1,7 +1,10 @@
-import csv
-import random
 import mysql.connector # pip install mysql-connector-python
 import os
+
+'''
+For more information on MySQL Connection to python: https://www.w3schools.com/python/python_mysql_getstarted.asp
+'''
+
 
 # Get directory of parent for use with proper execution
 parentDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -10,7 +13,7 @@ parentDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Connect to MySQL db
 mydb = mysql.connector.connect(
   host="localhost",
-  user="username", # Fill out MySQL username here TODO: store in a config file that is in .gitignore
+  user="root", # Fill out MySQL username here (default: root) TODO: store in a config file that is in .gitignore
   password="password", # Fill out your MySQL password here
   database='project'
 )
@@ -52,13 +55,13 @@ def main():
               \n\t10) List most frequently borrowed items by each client type\
               \n\t11) List clients have never returned an item late')
         choice = (int(input('Choose an option: '))-1)
-        if choice >= 0 and len(queryList) > choice:
+        if len(queryList) > choice >= 0:
             results = executeQuery(queryList[choice])
             for row in results:
                 print(row)
     elif choice == '2':
         print(f'Report Options:\
-              \n\t1) Monthly Sumamry Report\
+              \n\t1) Monthly Summary Report\
               \n\t2) Client Activity Report\
               \n\t3) Inventory Report\
               \n\t4) Overdue Item Report\
