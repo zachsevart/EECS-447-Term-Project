@@ -35,6 +35,16 @@ def loadQuery():
     # Clean up lines
     return [q.strip() for q in queriesList if q.strip()]
 
+
+def loadReports():
+    with open(os.path.join(parentDir, 'Sql_Files', 'Reports.sql'), "r") as file:
+        reports = file.read()
+
+    # Split the file into individual reports based on semicolon
+    reportList = reports.split(";")
+
+    return [r.strip() for r in reportList if r.strip()] 
+
 def main():
     choice = 0
     while choice not in ['1','2','3','4']:
@@ -60,12 +70,18 @@ def main():
             for row in results:
                 print(row)
     elif choice == '2':
+        reportList = loadReports()
         print(f'Report Options:\
               \n\t1) Monthly Summary Report\
               \n\t2) Client Activity Report\
               \n\t3) Inventory Report\
               \n\t4) Overdue Item Report\
               \n\t5) Financial Report')
+        choice = (int(input('Choose an option: '))-1)
+        if len(reportList) > choice >= 0:
+            results = executeQuery(reportList[choice])
+            for row in results:
+                print(row)
     elif choice == '3':
         print(f'Staff Interface:\
               \n\t1) Check Out Items\
