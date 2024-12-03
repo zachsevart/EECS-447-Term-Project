@@ -1,3 +1,4 @@
+DROP DATABASE project;
 CREATE DATABASE IF NOT EXISTS project; -- Create Database called project and set to use it
 USE project;
 
