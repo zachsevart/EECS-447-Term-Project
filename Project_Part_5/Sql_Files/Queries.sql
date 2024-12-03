@@ -14,6 +14,15 @@ SELECT magazine_id, issue_number, title, publisher FROM magazine WHERE availabil
 
 
 -- Find total Number of items loaned out by each membership type
+SELECT Client.membership_type, COUNT(Loaned.client_id) AS total_loaned
+FROM Client LEFT JOIN
+(SELECT client_id from bookborrowing
+UNION all
+SELECT client_id from digitalmediaborrowing
+UNION all
+SELECT client_id from magazineborrowing) AS Loaned
+On Client.unique_id = Loaned.client_id
+GROUP BY Client.membership_type;
 
 
 
@@ -42,5 +51,10 @@ SELECT magazine_id, issue_number, title, publisher FROM magazine WHERE availabil
 
 
 -- Find out which clients have never returned an item late
-
-
+SELECT DISTINCT unique_id, Client.name
+FROM Client
+WHERE Client.unique_id NOT IN (
+    SELECT DISTINCT client_id
+    FROM Fee
+    WHERE Fee.amount > 0
+);
