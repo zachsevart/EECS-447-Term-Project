@@ -1,11 +1,7 @@
--- Monthly Sumamry Report
--- Generate a report summarizing the total number of items loaned, total fees collected, and most popular items for the month.
--- Breakdown the statistics by client type and item category (Books, Digital Media, Magazines)
 CREATE OR REPLACE VIEW MonthlySummaryReport AS
 -- Total borrowed for Books
 SELECT 
-    YEAR(bb.borrow_date) AS year,
-    MONTH(bb.borrow_date) AS month,
+    c.membership_type AS client_type,
     'Book' AS item_type,
     COUNT(bb.item_id) AS total_borrowed,
     COALESCE(SUM(f.amount), 0) AS total_fees_collected,
@@ -13,68 +9,65 @@ SELECT
      FROM BookBorrowing bb_pop
      JOIN Book_Copy bc ON bb_pop.item_id = bc.copy_id
      JOIN Book b ON bc.ISBN = b.ISBN
-     WHERE YEAR(bb_pop.borrow_date) = YEAR(CURRENT_DATE)
-       AND MONTH(bb_pop.borrow_date) = MONTH(CURRENT_DATE)
+     WHERE YEAR(bb_pop.borrow_date) = 2024 AND MONTH(bb_pop.borrow_date) = 11
      GROUP BY b.title
      ORDER BY COUNT(bb_pop.item_id) DESC
      LIMIT 1) AS most_popular_item
 FROM 
     BookBorrowing bb
-LEFT JOIN Fee f ON bb.client_id = f.client_id AND f.item_type = 'book' 
-                 AND YEAR(f.fee_date) = YEAR(CURRENT_DATE) AND MONTH(f.fee_date) = MONTH(CURRENT_DATE)
-WHERE YEAR(bb.borrow_date) = YEAR(CURRENT_DATE)
-  AND MONTH(bb.borrow_date) = MONTH(CURRENT_DATE)
-GROUP BY year, month, item_type
+JOIN Client c ON bb.client_id = c.unique_id
+LEFT JOIN Fee f ON f.client_id = bb.client_id 
+                 AND f.item_type = 'book'
+WHERE YEAR(bb.borrow_date) = 2024 AND MONTH(bb.borrow_date) = 11
+GROUP BY client_type, item_type
 
 UNION ALL
 
 -- Total borrowed for Digital Media
 SELECT 
-    YEAR(dmb.borrow_date) AS year,
-    MONTH(dmb.borrow_date) AS month,
+    c.membership_type AS client_type,
     'Digital Media' AS item_type,
     COUNT(dmb.item_id) AS total_borrowed,
     COALESCE(SUM(f.amount), 0) AS total_fees_collected,
     (SELECT dm.title 
      FROM DigitalMediaBorrowing dmb_pop
      JOIN DigitalMedia dm ON dmb_pop.item_id = dm.digital_media_id
-     WHERE YEAR(dmb_pop.borrow_date) = YEAR(CURRENT_DATE)
-       AND MONTH(dmb_pop.borrow_date) = MONTH(CURRENT_DATE)
+     WHERE YEAR(dmb_pop.borrow_date) = 2024 AND MONTH(dmb_pop.borrow_date) = 11
      GROUP BY dm.title
      ORDER BY COUNT(dmb_pop.item_id) DESC
      LIMIT 1) AS most_popular_item
 FROM 
     DigitalMediaBorrowing dmb
-LEFT JOIN Fee f ON dmb.client_id = f.client_id AND f.item_type = 'digital_media'
-                 AND YEAR(f.fee_date) = YEAR(CURRENT_DATE) AND MONTH(f.fee_date) = MONTH(CURRENT_DATE)
-WHERE YEAR(dmb.borrow_date) = YEAR(CURRENT_DATE)
-  AND MONTH(dmb.borrow_date) = MONTH(CURRENT_DATE)
-GROUP BY year, month, item_type
+JOIN Client c ON dmb.client_id = c.unique_id
+LEFT JOIN Fee f ON f.client_id = dmb.client_id 
+                 AND f.item_type = 'digital_media'
+WHERE YEAR(dmb.borrow_date) = 2024 AND MONTH(dmb.borrow_date) = 11
+GROUP BY client_type, item_type
 
 UNION ALL
 
 -- Total borrowed for Magazines
 SELECT 
-    YEAR(mb.borrow_date) AS year,
-    MONTH(mb.borrow_date) AS month,
+    c.membership_type AS client_type,
     'Magazine' AS item_type,
     COUNT(mb.item_id) AS total_borrowed,
     COALESCE(SUM(f.amount), 0) AS total_fees_collected,
     (SELECT m.title 
      FROM MagazineBorrowing mb_pop
      JOIN Magazine m ON mb_pop.item_id = m.magazine_id
-     WHERE YEAR(mb_pop.borrow_date) = YEAR(CURRENT_DATE)
-       AND MONTH(mb_pop.borrow_date) = MONTH(CURRENT_DATE)
+     WHERE YEAR(mb_pop.borrow_date) = 2024 AND MONTH(mb_pop.borrow_date) = 11
      GROUP BY m.title
      ORDER BY COUNT(mb_pop.item_id) DESC
      LIMIT 1) AS most_popular_item
 FROM 
     MagazineBorrowing mb
-LEFT JOIN Fee f ON mb.client_id = f.client_id AND f.item_type = 'magazine'
-                 AND YEAR(f.fee_date) = YEAR(CURRENT_DATE) AND MONTH(f.fee_date) = MONTH(CURRENT_DATE)
-WHERE YEAR(mb.borrow_date) = YEAR(CURRENT_DATE)
-  AND MONTH(mb.borrow_date) = MONTH(CURRENT_DATE)
-GROUP BY year, month, item_type;
+JOIN Client c ON mb.client_id = c.unique_id
+LEFT JOIN Fee f ON f.client_id = mb.client_id 
+                 AND f.item_type = 'magazine'
+WHERE YEAR(mb.borrow_date) = 2024 AND MONTH(mb.borrow_date) = 11
+GROUP BY client_type, item_type;
+
+
 
 
 -- Client Activity Report
