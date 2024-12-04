@@ -124,7 +124,7 @@ FROM
 LEFT JOIN BookBorrowing bb ON Client.unique_id = bb.client_id AND bb.return_date IS NULL AND bb.due_date < CURRENT_DATE
 LEFT JOIN DigitalMediaBorrowing dmb ON Client.unique_id = dmb.client_id AND dmb.return_date IS NULL AND dmb.due_date < CURRENT_DATE
 LEFT JOIN MagazineBorrowing mb ON Client.unique_id = mb.client_id AND mb.return_date IS NULL AND mb.due_date < CURRENT_DATE
-LEFT JOIN Book b ON bb.item_id = b.copy_id
+LEFT JOIN Book b ON bb.item_id = b.ISBN
 LEFT JOIN DigitalMedia dm ON dmb.item_id = dm.digital_media_id
 LEFT JOIN Magazine m ON mb.item_id = m.magazine_id;
 
