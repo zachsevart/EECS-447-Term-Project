@@ -71,8 +71,7 @@ FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas
 LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
 IGNORE 1 ROWS
 (fee_id, client_id, item_type, amount, fee_date, @paid_on_date)
-SET return_date = NULLIF(@paid_on_date, '');
-
+SET paid_on_date = NULLIF(@paid_on_date, '');
 
 
 LOAD DATA INFILE '/var/lib/mysql-files/fee.csv'

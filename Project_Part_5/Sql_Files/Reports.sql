@@ -192,24 +192,14 @@ WHERE
 -- Summarize the library’s revenue from fees, showing the breakdown by membership type and item category
 CREATE VIEW FinancialReport AS
 SELECT 
-    Client.name AS client_name,
-    Client.membership_type,
-    CASE 
-        WHEN bb.item_id IS NOT NULL THEN 'Book'
-        WHEN dmb.item_id IS NOT NULL THEN 'Digital Media'
-        WHEN mb.item_id IS NOT NULL THEN 'Magazine'
-    END AS item_type,
-    CASE 
-        WHEN bb.item_id IS NOT NULL THEN DATEDIFF(CURRENT_DATE, bb.due_date) * 0.50
-        WHEN dmb.item_id IS NOT NULL THEN DATEDIFF(CURRENT_DATE, dmb.due_date) * 0.50
-        WHEN mb.item_id IS NOT NULL THEN DATEDIFF(CURRENT_DATE, mb.due_date) * 0.50
-    END AS late_fee
+    c.name AS client_name,
+    c.membership_type,
+    f.item_type,
+    SUM(f.amount) AS total_revenue
 FROM 
-    Client
-LEFT JOIN BookBorrowing bb ON Client.unique_id = bb.client_id AND bb.return_date IS NULL AND bb.due_date < CURRENT_DATE
-LEFT JOIN DigitalMediaBorrowing dmb ON Client.unique_id = dmb.client_id AND dmb.return_date IS NULL AND dmb.due_date < CURRENT_DATE
-LEFT JOIN MagazineBorrowing mb ON Client.unique_id = mb.client_id AND mb.return_date IS NULL AND mb.due_date < CURRENT_DATE
-WHERE 
-    (bb.due_date < CURRENT_DATE AND bb.return_date IS NULL) OR
-    (dmb.due_date < CURRENT_DATE AND dmb.return_date IS NULL) OR
-    (mb.due_date < CURRENT_DATE AND mb.return_date IS NULL);
+    Client c
+LEFT JOIN Fee f ON c.unique_id = f.client_id
+GROUP BY 
+    c.name, c.membership_type, f.item_type
+HAVING 
+    SUM(f.amount) IS NOT NULL;
