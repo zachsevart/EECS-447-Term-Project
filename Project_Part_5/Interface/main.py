@@ -20,38 +20,25 @@ mydb = mysql.connector.connect(
 # Create cursor to interact with DB
 mycursor = mydb.cursor()
 
-
+# Executes a query for a list of options
 def executeQuery(query):
-    mycursor.execute(query)
-    return mycursor.fetchall()
+    try:
+        mycursor.execute(query)
+        return mycursor.fetchall()
+    except Exception as e:
+        print(f"Error occured: {e}")
+        return []
 
+# Load in the queries.sql file
 def loadQuery():
     with open(os.path.join(parentDir, 'Sql_Files', 'Queries.sql'), "r") as file:
         queries = file.read()
-
     # Split the file into individual queries based on semicolons
     queriesList = queries.split(";")
 
     # Clean up lines
     return [q.strip() for q in queriesList if q.strip()]
 
-def loadReports():
-    with open(os.path.join(parentDir, 'Sql_Files', 'Reports.sql'), "r") as file:
-        reports = file.read()
-
-    # Split the file into individual reports based on semicolon
-    reportList = reports.split(";")
-
-    return [r.strip() for r in reportList if r.strip()] 
-
-
-'''
-TODO: Code the processes below, if not understanding how to do the code
-    If you can map out what all needs to be changed and what tables and in order we can code that ezpz after
-
-TODO: Look into DATEDIFF or other date based sql/python stuff to
-    figure our how to get a date X days after given date for fee date
-'''
 
 # Staff interface for checking out items, processing return, adding new items, and managing client accounts
 def staffInterface(choice):
@@ -414,18 +401,25 @@ def main():
                 for row in results:
                     print(row)
     elif choice == '2':
-        reportList = loadReports()
+        reports = {0:'MonthlySummaryReport', 1:'ClientActivityReport', 2:'InventoryReport', 3:'OverdueItemReport', 4:'FinancialReport'}
         print(f'Report Options:\
               \n\t1) Monthly Summary Report\
               \n\t2) Client Activity Report\
               \n\t3) Inventory Report\
               \n\t4) Overdue Item Report\
               \n\t5) Financial Report')
-        choice = (int(input('Choose an option: '))-1)
-        if len(reportList) > choice >= 0:
-            results = executeQuery(reportList[choice])
-            for row in results:
-                print(row)
+        try:
+            choice = (int(input('Choose an option: '))-1)
+            if len(reports) > choice >= 0:
+                results = executeQuery(f'SELECT * FROM {reports[choice]}')
+                if results:
+                    for row in results:
+                        print(row)
+                else:
+                    print('No results found.')
+        except Exception as e:
+            print(f'Error occured: {e}')
+            return
     elif choice == '3':
         print(f'Staff Interface:\
               \n\t1) Check Out Items\
