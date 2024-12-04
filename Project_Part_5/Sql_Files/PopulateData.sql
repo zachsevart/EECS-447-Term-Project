@@ -61,4 +61,6 @@ INTO TABLE DigitalMediaBorrowing
 FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas
 LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
 IGNORE 1 ROWS
-(client_id, item_id, borrow_date, due_date);
+(client_id, item_id, borrow_date, due_date, @return_date)
+SET return_date = NULLIF(@return_date, '');
+
