@@ -109,7 +109,7 @@ def staffInterface(choice):
         mycursor.execute("""
             SELECT due_date, client_id, 'Book' AS item_type
             FROM BookBorrowing
-            WHERE copy_id = %s AND return_date IS NULL
+            WHERE item_id = %s AND return_date IS NULL
         """, (copy_id,))
         result = mycursor.fetchone()
 
@@ -121,9 +121,9 @@ def staffInterface(choice):
 
         # Update return date and item status
         mycursor.execute("""
-            UPDATE Borrowing
+            UPDATE BookBorrowing
             SET return_date = %s
-            WHERE copy_id = %s AND return_date IS NULL
+            WHERE item_id = %s AND return_date IS NULL
         """, (return_date, copy_id))
         mycursor.execute("UPDATE Book_copy SET status = 'Available' WHERE copy_id = %s", (copy_id,))
 
