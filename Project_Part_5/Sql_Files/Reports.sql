@@ -1,24 +1,80 @@
 -- Monthly Sumamry Report
 -- Generate a report summarizing the total number of items loaned, total fees collected, and most popular items for the month.
 -- Breakdown the statistics by client type and item category (Books, Digital Media, Magazines)
-CREATE VIEW MonthlySummaryReport AS
+CREATE OR REPLACE VIEW MonthlySummaryReport AS
+-- Total borrowed for Books
 SELECT 
-    YEAR(borrow_date) AS year,
-    MONTH(borrow_date) AS month,
-    CASE 
-        WHEN bb.item_id IS NOT NULL THEN 'Book'
-        WHEN dmb.item_id IS NOT NULL THEN 'Digital Media'
-        WHEN mb.item_id IS NOT NULL THEN 'Magazine'
-    END AS item_type,
-    COUNT(*) AS total_borrowed
+    YEAR(bb.borrow_date) AS year,
+    MONTH(bb.borrow_date) AS month,
+    'Book' AS item_type,
+    COUNT(bb.item_id) AS total_borrowed,
+    COALESCE(SUM(f.amount), 0) AS total_fees_collected,
+    (SELECT b.title 
+     FROM BookBorrowing bb_pop
+     JOIN Book_Copy bc ON bb_pop.item_id = bc.copy_id
+     JOIN Book b ON bc.ISBN = b.ISBN
+     WHERE YEAR(bb_pop.borrow_date) = YEAR(CURRENT_DATE)
+       AND MONTH(bb_pop.borrow_date) = MONTH(CURRENT_DATE)
+     GROUP BY b.title
+     ORDER BY COUNT(bb_pop.item_id) DESC
+     LIMIT 1) AS most_popular_item
 FROM 
     BookBorrowing bb
-LEFT JOIN DigitalMediaBorrowing dmb ON bb.client_id = dmb.client_id
-LEFT JOIN MagazineBorrowing mb ON bb.client_id = mb.client_id
-WHERE YEAR(borrow_date) = YEAR(CURRENT_DATE) 
-  AND MONTH(borrow_date) = MONTH(CURRENT_DATE)
-GROUP BY year, month, item_type;
+LEFT JOIN Fee f ON bb.client_id = f.client_id AND f.item_type = 'book' 
+                 AND YEAR(f.fee_date) = YEAR(CURRENT_DATE) AND MONTH(f.fee_date) = MONTH(CURRENT_DATE)
+WHERE YEAR(bb.borrow_date) = YEAR(CURRENT_DATE)
+  AND MONTH(bb.borrow_date) = MONTH(CURRENT_DATE)
+GROUP BY year, month, item_type
 
+UNION ALL
+
+-- Total borrowed for Digital Media
+SELECT 
+    YEAR(dmb.borrow_date) AS year,
+    MONTH(dmb.borrow_date) AS month,
+    'Digital Media' AS item_type,
+    COUNT(dmb.item_id) AS total_borrowed,
+    COALESCE(SUM(f.amount), 0) AS total_fees_collected,
+    (SELECT dm.title 
+     FROM DigitalMediaBorrowing dmb_pop
+     JOIN DigitalMedia dm ON dmb_pop.item_id = dm.digital_media_id
+     WHERE YEAR(dmb_pop.borrow_date) = YEAR(CURRENT_DATE)
+       AND MONTH(dmb_pop.borrow_date) = MONTH(CURRENT_DATE)
+     GROUP BY dm.title
+     ORDER BY COUNT(dmb_pop.item_id) DESC
+     LIMIT 1) AS most_popular_item
+FROM 
+    DigitalMediaBorrowing dmb
+LEFT JOIN Fee f ON dmb.client_id = f.client_id AND f.item_type = 'digital_media'
+                 AND YEAR(f.fee_date) = YEAR(CURRENT_DATE) AND MONTH(f.fee_date) = MONTH(CURRENT_DATE)
+WHERE YEAR(dmb.borrow_date) = YEAR(CURRENT_DATE)
+  AND MONTH(dmb.borrow_date) = MONTH(CURRENT_DATE)
+GROUP BY year, month, item_type
+
+UNION ALL
+
+-- Total borrowed for Magazines
+SELECT 
+    YEAR(mb.borrow_date) AS year,
+    MONTH(mb.borrow_date) AS month,
+    'Magazine' AS item_type,
+    COUNT(mb.item_id) AS total_borrowed,
+    COALESCE(SUM(f.amount), 0) AS total_fees_collected,
+    (SELECT m.title 
+     FROM MagazineBorrowing mb_pop
+     JOIN Magazine m ON mb_pop.item_id = m.magazine_id
+     WHERE YEAR(mb_pop.borrow_date) = YEAR(CURRENT_DATE)
+       AND MONTH(mb_pop.borrow_date) = MONTH(CURRENT_DATE)
+     GROUP BY m.title
+     ORDER BY COUNT(mb_pop.item_id) DESC
+     LIMIT 1) AS most_popular_item
+FROM 
+    MagazineBorrowing mb
+LEFT JOIN Fee f ON mb.client_id = f.client_id AND f.item_type = 'magazine'
+                 AND YEAR(f.fee_date) = YEAR(CURRENT_DATE) AND MONTH(f.fee_date) = MONTH(CURRENT_DATE)
+WHERE YEAR(mb.borrow_date) = YEAR(CURRENT_DATE)
+  AND MONTH(mb.borrow_date) = MONTH(CURRENT_DATE)
+GROUP BY year, month, item_type;
 
 
 -- Client Activity Report
@@ -96,7 +152,7 @@ GROUP BY Magazine.magazine_id;
 
 -- Overdue Item Report
 -- Generate a report listing all overdue items, the client responsible, and the calculated late fees.
-CREATE VIEW OverdueItemReport AS
+CREATE OR REPLACE VIEW OverdueItemReport AS
 SELECT 
     Client.name AS client_name,
     CASE 
@@ -126,7 +182,9 @@ LEFT JOIN DigitalMediaBorrowing dmb ON Client.unique_id = dmb.client_id AND dmb.
 LEFT JOIN MagazineBorrowing mb ON Client.unique_id = mb.client_id AND mb.return_date IS NULL AND mb.due_date < CURRENT_DATE
 LEFT JOIN Book b ON bb.item_id = b.ISBN
 LEFT JOIN DigitalMedia dm ON dmb.item_id = dm.digital_media_id
-LEFT JOIN Magazine m ON mb.item_id = m.magazine_id;
+LEFT JOIN Magazine m ON mb.item_id = m.magazine_id
+WHERE 
+    bb.item_id IS NOT NULL OR dmb.item_id IS NOT NULL OR mb.item_id IS NOT NULL;
 
 
 
