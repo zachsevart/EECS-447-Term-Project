@@ -48,8 +48,15 @@ IGNORE 1 ROWS
 (client_id, item_id, borrow_date, due_date);
 
 
-LOAD DATA INFILE '../Uploads/magazine_borrowing.csv' -- Load data in from a csv file to the "Magazine" relation
+LOAD DATA INFILE '../Uploads/magazine_borrowing.csv'
 INTO TABLE MagazineBorrowing
+FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas
+LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
+IGNORE 1 ROWS
+(client_id, item_id, borrow_date, due_date);
+
+LOAD DATA INFILE '../Uploads/digital_borrowing.csv'
+INTO TABLE DigitalMediaBorrowing 
 FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas
 LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
 IGNORE 1 ROWS

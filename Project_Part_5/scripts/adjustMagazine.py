@@ -4,7 +4,7 @@ import csv, random, datetime
 
 if __name__ == "__main__":
     clients = []
-    with open('../Data/magazines.csv', mode ='r')as file:
+    with open('../Data/digitalmedia.csv', mode ='r')as file:
         csvFile = csv.reader(file)
         for lines in csvFile:
             out = ""

@@ -1,56 +1,56 @@
 digital_media_id,title,author,publisher,publication_year,genre,availability_status
-1,Inception,Christopher Nolan,Warner Bros,2010,Science Fiction,Available
-2,Stranger Things,The Duffer Brothers,Netflix,2016,Drama,Available
-3,The Matrix,Lana Wachowski & Lilly Wachowski,Warner Bros,1999,Action,Available
+1,Inception,Christopher Nolan,Warner Bros,2010,Science Fiction,Borrowed
+2,Stranger Things,The Duffer Brothers,Netflix,2016,Drama,Borrowed
+3,The Matrix,Lana Wachowski & Lilly Wachowski,Warner Bros,1999,Action,Borrowed
 4,Game of Thrones,George R.R. Martin,HBO,2011,Fantasy,Available
-5,The Social Network,Aaron Sorkin,Columbia Pictures,2010,Biographical Drama,Available
+5,The Social Network,Aaron Sorkin,Columbia Pictures,2010,Biographical Drama,Borrowed
 6,Breaking Bad,Vince Gilligan,AMC,2008,Crime,Available
 7,Avatar,James Cameron,20th Century Studios,2009,Science Fiction,Available
 8,The Lord of the Rings: The Fellowship of the Ring,J.R.R. Tolkien,New Line Cinema,2001,Fantasy,Available
 9,The Crown,Peter Morgan,Netflix,2016,Historical Drama,Available
-10,Interstellar,Christopher Nolan,Paramount Pictures,2014,Science Fiction,Available
+10,Interstellar,Christopher Nolan,Paramount Pictures,2014,Science Fiction,Reserved
 11,Black Mirror,Charlie Brooker,Netflix,2011,Drama,Available
-12,Harry Potter and the Sorcerer's Stone,J.K. Rowling,Warner Bros,2001,Fantasy,Available
-13,The Witcher,Andrzej Sapkowski,Netflix,2019,Fantasy,Available
-14,The Simpsons,Matt Groening,Fox,1989,Comedy,Available
+12,Harry Potter and the Sorcerer's Stone,J.K. Rowling,Warner Bros,2001,Fantasy,Reserved
+13,The Witcher,Andrzej Sapkowski,Netflix,2019,Fantasy,Reserved
+14,The Simpsons,Matt Groening,Fox,1989,Comedy,Borrowed
 15,The Mandalorian,Jon Favreau,Disney+,2019,Science Fiction,Available
 16,Friends,David Crane & Marta Kauffman,NBC,1994,Comedy,Available
-17,Dune,Frank Herbert,Warner Bros,2021,Science Fiction,Available
+17,Dune,Frank Herbert,Warner Bros,2021,Science Fiction,Reserved
 18,The Dark Knight,Christopher Nolan,Warner Bros,2008,Action,Available
-19,Pulp Fiction,Quentin Tarantino,Miramax Films,1994,Crime,Available
-20,The Office,Ricky Gervais & Stephen Merchant,BBC,2001,Comedy,Available
+19,Pulp Fiction,Quentin Tarantino,Miramax Films,1994,Crime,Reserved
+20,The Office,Ricky Gervais & Stephen Merchant,BBC,2001,Comedy,Borrowed
 21,Severance,Dan Erickson,Apple TV+,2022,Drama,Available
-22,Avengers: Endgame,Anthony & Joe Russo,Marvel Studios,2019,Action,Available
-23,The Big Bang Theory,Chuck Lorre & Bill Prady,CBS,2007,Comedy,Available
+22,Avengers: Endgame,Anthony & Joe Russo,Marvel Studios,2019,Action,Borrowed
+23,The Big Bang Theory,Chuck Lorre & Bill Prady,CBS,2007,Comedy,Borrowed
 24,Schitt's Creek,Dan Levy & Eugene Levy,CBC,2015,Comedy,Available
-25,The Good Place,Michael Schur,NBC,2016,Comedy,Available
-26,Euphoria,Sam Levinson,HBO,2019,Drama,Available
+25,The Good Place,Michael Schur,NBC,2016,Comedy,Reserved
+26,Euphoria,Sam Levinson,HBO,2019,Drama,Reserved
 27,The Walking Dead,Robert Kirkman,AMC,2010,Horror,Available
 28,Spirited Away,Hayao Miyazaki,Studio Ghibli,2001,Fantasy,Available
-29,Coco,Lee Unkrich & Adrian Molina,Pixar Animation Studios,2017,Family,Available
-30,House of Cards,Beau Willimon,Netflix,2013,Drama,Available
+29,Coco,Lee Unkrich & Adrian Molina,Pixar Animation Studios,2017,Family,Borrowed
+30,House of Cards,Beau Willimon,Netflix,2013,Drama,Borrowed
 31,Fargo,Noah Hawley,FX,2014,Crime,Available
 32,12 Angry Men,Reginald Rose,United Artists,1957,Drama,Available
-33,Stranger by the Lake,Alain Guiraudie,Les Films du Losange,2013,Thriller,Available
+33,Stranger by the Lake,Alain Guiraudie,Les Films du Losange,2013,Thriller,Borrowed
 34,The Grand Budapest Hotel,Wes Anderson,Searchlight Pictures,2014,Comedy,Available
-35,Paddington,Paul King,StudioCanal,2014,Family,Available
-36,Sherlock,Mark Gatiss & Steven Moffat,BBC,2010,Mystery,Available
-37,The Boys,Eric Kripke,Amazon Prime Video,2019,Action,Available
+35,Paddington,Paul King,StudioCanal,2014,Family,Borrowed
+36,Sherlock,Mark Gatiss & Steven Moffat,BBC,2010,Mystery,Reserved
+37,The Boys,Eric Kripke,Amazon Prime Video,2019,Action,Reserved
 38,Bojack Horseman,Raphael Bob-Waksberg,Netflix,2014,Animation,Available
-39,The Wire,David Simon,HBO,2002,Crime,Available
+39,The Wire,David Simon,HBO,2002,Crime,Borrowed
 40,The X-Files,Chris Carter,Fox,1993,Science Fiction,Available
 41,Better Call Saul,Vince Gilligan & Peter Gould,AMC,2015,Drama,Available
-42,The Truman Show,Andrew Niccol,Paramount Pictures,1998,Comedy,Available
+42,The Truman Show,Andrew Niccol,Paramount Pictures,1998,Comedy,Reserved
 43,Blade Runner 2049,Denis Villeneuve,Warner Bros,2017,Science Fiction,Available
 44,Westworld,Lisa Joy & Jonathan Nolan,HBO,2016,Science Fiction,Available
-45,How I Met Your Mother,Carter Bays & Craig Thomas,CBS,2005,Comedy,Available
+45,How I Met Your Mother,Carter Bays & Craig Thomas,CBS,2005,Comedy,Borrowed
 46,Succession,Jesse Armstrong,HBO,2018,Drama,Available
-47,The Queen's Gambit,Scott Frank & Allan Scott,Netflix,2020,Drama,Available
-48,Chernobyl,Craig Mazin,HBO,2019,Historical Drama,Available
-49,Parks and Recreation,Greg Daniels & Michael Schur,NBC,2009,Comedy,Available
+47,The Queen's Gambit,Scott Frank & Allan Scott,Netflix,2020,Drama,Borrowed
+48,Chernobyl,Craig Mazin,HBO,2019,Historical Drama,Borrowed
+49,Parks and Recreation,Greg Daniels & Michael Schur,NBC,2009,Comedy,Borrowed
 50,The Twilight Zone,Rod Serling,CBS,1959,Science Fiction,Available
-51,Mad Men,Matthew Weiner,AMC,2007,Drama,Available
+51,Mad Men,Matthew Weiner,AMC,2007,Drama,Borrowed
 52,1917,Sam Mendes,Universal Pictures,2019,War,Available
 53,Loki,Michael Waldron,Marvel Studios,2021,Science Fiction,Available
 54,WandaVision,Jac Schaeffer,Marvel Studios,2021,Fantasy,Available
-55,The Witch,Hannah Kent,A24,2015,Horror,Available
+55,The Witch,Hannah Kent,A24,2015,Horror,Reserved
