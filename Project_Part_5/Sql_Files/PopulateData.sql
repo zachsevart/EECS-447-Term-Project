@@ -56,18 +56,6 @@ IGNORE 1 ROWS
 (client_id, item_id, borrow_date, due_date,@return_date)
 SET return_date = NULLIF(@return_date, '');
 
-
-
-LOAD DATA INFILE '/var/lib/mysql-files/magazine_borrowing.csv'
-INTO TABLE MagazineBorrowing
-FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas
-LINES TERMINATED BY '\n' -- Define lines being seperated by new line characters
-IGNORE 1 ROWS
-(client_id, item_id, borrow_date, due_date,@return_date)
-SET return_date = NULLIF(@return_date, '');
-
-
-
 LOAD DATA INFILE '../Uploads/digital_borrowing.csv'
 INTO TABLE DigitalMediaBorrowing 
 FIELDS TERMINATED BY ','  -- Define the file headings being seperated by commas

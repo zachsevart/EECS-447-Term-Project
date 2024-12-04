@@ -1,13 +1,13 @@
 unique_id, name, contact_info, membership_type, account_status
-1,Dorotea Isworth,disworth0@cbc.ca,Student,Suspended
-2,Sophie Station,sstation1@ustream.tv,Regular,Expired
+1,Dorotea Isworth,disworth0@cbc.ca,Student,Active
+2,Sophie Station,sstation1@ustream.tv,Regular,Active
 3,Kaylee Coupe,kcoupe2@hugedomains.com,Student,Suspended
 4,Curcio Levett,clevett3@devhub.com,Senior,Expired
-5,Alix Maunton,amaunton4@unicef.org,Regular,Expired
-6,Christal Muscroft,cmuscroft5@youtu.be,Regular,Suspended
+5,Alix Maunton,amaunton4@unicef.org,Regular,Active
+6,Christal Muscroft,cmuscroft5@youtu.be,Regular,Active
 7,Cort McCue,cmccue6@naver.com,Senior,Active
-8,Maximilien Duchart,mduchart7@wufoo.com,Senior,Suspended
-9,Alejoa Le Sarr,alesarr8@zdnet.com,Regular,Suspended
+8,Maximilien Duchart,mduchart7@wufoo.com,Senior,Active
+9,Alejoa Le Sarr,alesarr8@zdnet.com,Regular,Active
 10,Hendrik Cathesyed,hcathesyed9@gmpg.org,Senior,Suspended
 11,Rawley Dechelette,rdechelettea@weibo.com,Student,Active
 12,Lindi Attwater,lattwaterb@hibu.com,Student,Suspended
@@ -41,11 +41,11 @@ unique_id, name, contact_info, membership_type, account_status
 40,Juliette Witchard,jwitchard13@godaddy.com,Regular,Expired
 41,Rhonda Kiggel,rkiggel14@naver.com,Student,Expired
 42,Elvyn Andreu,eandreu15@unblog.fr,Regular,Suspended
-43,Norri Tomlins,ntomlins16@admin.ch,Student,Suspended
+43,Norri Tomlins,ntomlins16@admin.ch,Student,Active
 44,Brandice Ullyott,bullyott17@hostgator.com,Student,Expired
-45,Correy Ferrarello,cferrarello18@nba.com,Student,Expired
-46,Niall Ripsher,nripsher19@geocities.com,Student,Suspended
-47,Suzann Duesberry,sduesberry1a@hubpages.com,Student,Expired
-48,Corny Stroobant,cstroobant1b@blogger.com,Regular,Suspended
-49,Anya Castletine,acastletine1c@sun.com,Student,Expired
-50,Asher Sergeaunt,asergeaunt1d@npr.org,Senior,Suspended
+45,Correy Ferrarello,cferrarello18@nba.com,Student,Active
+46,Niall Ripsher,nripsher19@geocities.com,Student,Active
+47,Suzann Duesberry,sduesberry1a@hubpages.com,Student,Active
+48,Corny Stroobant,cstroobant1b@blogger.com,Regular,Active
+49,Anya Castletine,acastletine1c@sun.com,Student,Active
+50,Asher Sergeaunt,asergeaunt1d@npr.org,Senior,Active
