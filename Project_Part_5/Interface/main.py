@@ -14,7 +14,7 @@ parentDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 mydb = mysql.connector.connect(
   host="localhost",
   user="root", # Fill out MySQL username here (default: root) TODO: store in a config file that is in .gitignore
-  password="password", # Fill out your MySQL password here
+  password="8420", # Fill out your MySQL password here
   database='project'
 )
 # Create cursor to interact with DB
@@ -78,7 +78,7 @@ def clientInterface(choice):
             myresult = mycursor.fetchall()
             for x in myresult:
                 print(x)
-    elif choice == 1: # Reserve items
+    elif choice == 1: # Reserve items TODO: ADD link to client to reserved item
         print('Select the # of what to reserve\
               \n\t1) Books\
               \n\t2) Magazines\
@@ -93,8 +93,7 @@ def clientInterface(choice):
                 mycursor.execute(sql, (isbn,))
                 myresult = mycursor.fetchone()
                 if myresult:
-                    for x in myresult:
-                        print(f'Selected Book: {x}')
+                    print(f'Selected Book: {myresult[1]}')
                     query_update = "UPDATE Book_Copy SET status = 'Reserved' WHERE copy_id = %s"
                     mycursor.execute(query_update, (myresult[0],))  # Assuming copy_id is the first column
                     mydb.commit()  # Commit the changes to the database
@@ -131,8 +130,39 @@ def clientInterface(choice):
     elif choice == 2: # Check loan status
         print('Enter client ID:')
         idNum = input().strip()
-        sql = ""
-        mycursor.execute()
+        sql = "SELECT * FROM Client WHERE unique_id = %s"
+        mycursor.execute(sql, (idNum,))
+        myresult = mycursor.fetchone()
+        if not myresult:
+            print('Account not found')
+        elif myresult[4] == 'Active':
+            print(f'Welcome {myresult[1]}!')
+            loanQuery = """
+            SELECT item_id, item_type
+            FROM (
+                SELECT item_id, 'Book' AS item_type
+                FROM BookBorrowing
+                WHERE return_date IS NULL AND client_id = %s
+                UNION ALL
+                SELECT item_id, 'Digital Media' AS item_type
+                FROM DigitalMediaBorrowing
+                WHERE return_date IS NULL AND client_id = %s
+                UNION ALL
+                SELECT item_id, 'Magazine' AS item_type
+                FROM MagazineBorrowing
+                WHERE return_date IS NULL AND client_id = %s
+            ) AS BorrowedItems;
+            """
+            mycursor.execute(loanQuery, (idNum,idNum,idNum))
+            loans = mycursor.fetchall()
+            if loans:
+                print('Items borrowed:')
+                for loan in loans:
+                    print(f'\t{loan[1]}: Item ID: {loan[0]}')
+            else:
+                print('No borrowed items')
+        else:
+            print(f'Client Account not Active, Account: {myresult[1:3]}')
     elif choice == 3: # View outstanding fees
         pass
 
