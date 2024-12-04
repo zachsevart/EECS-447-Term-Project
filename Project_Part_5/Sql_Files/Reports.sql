@@ -79,7 +79,7 @@ GROUP BY year, month, item_type;
 
 -- Client Activity Report
 -- Produce an individual report for each client showing their borrowing history, outstanding fees, and any reserved items
-CREATE VIEW ClientActivityReport AS
+CREATE OR REPLACE VIEW ClientActivityReport AS
 SELECT 
     Client.name AS client_name,
     Client.membership_type,
@@ -110,7 +110,7 @@ GROUP BY Client.unique_id;
 -- Inventory Report
 -- List all items, their current availability status, and their last borrowed date.
 -- Highlight items that have not been borrowed in the past six months.
-CREATE VIEW InventoryReport AS
+CREATE OR REPLACE VIEW InventoryReport AS
 SELECT 
     'Book' AS item_type,
     Book.ISBN AS item_id,
@@ -190,7 +190,7 @@ WHERE
 
 -- Financial Report
 -- Summarize the library’s revenue from fees, showing the breakdown by membership type and item category
-CREATE VIEW FinancialReport AS
+CREATE OR REPLACE VIEW FinancialReport AS
 SELECT 
     c.name AS client_name,
     c.membership_type,

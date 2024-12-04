@@ -17,8 +17,10 @@ mydb = mysql.connector.connect(
   password="8420", # Fill out your MySQL password here
   database='project'
 )
+
 # Create cursor to interact with DB
 mycursor = mydb.cursor()
+
 
 # Executes a query for a list of options
 def executeQuery(query):
@@ -28,6 +30,7 @@ def executeQuery(query):
     except Exception as e:
         print(f"Error occured: {e}")
         return []
+
 
 # Load in the queries.sql file
 def loadQuery():
