@@ -1,11 +1,3 @@
-SELECT * FROM Client;
-
-UPDATE Client
-SET account_status = 'Active'
-WHERE unique_id = 2;
-
-
-SELECT * FROM Client;
 -- Show Available Books
 SELECT Book.ISBN, Book.title, Book.author
 FROM Book
