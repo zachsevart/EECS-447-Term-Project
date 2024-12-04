@@ -13,19 +13,19 @@ JOIN Book_Copy ON Book.ISBN = Book_Copy.ISBN
 WHERE Book_Copy.status = 'Available';
 
 -- Show Available Digital Media
-SELECT digital_media_id, title, author FROM digitalmedia WHERE availability_status = 'Available';
+SELECT digital_media_id, title, author FROM DigitalMedia WHERE availability_status = 'Available';
 
 -- Show Available Magazines
-SELECT magazine_id, issue_number, title, publisher FROM magazine WHERE availability_status = 'Available';
+SELECT magazine_id, issue_number, title, publisher FROM Magazine WHERE availability_status = 'Available';
 
 -- Find total Number of items loaned out by each membership type
 SELECT Client.membership_type, COUNT(Loaned.client_id) AS total_loaned
 FROM Client LEFT JOIN
-(SELECT client_id from bookborrowing
+(SELECT client_id from BookBorrowing 
 UNION all
-SELECT client_id from digitalmediaborrowing
+SELECT client_id from DigitalMediaBorrowing 
 UNION all
-SELECT client_id from magazineborrowing) AS Loaned
+SELECT client_id from MagazineBorrowing) AS Loaned
 On Client.unique_id = Loaned.client_id
 GROUP BY Client.membership_type;
 
