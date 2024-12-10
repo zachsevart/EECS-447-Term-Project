@@ -17,8 +17,10 @@ mydb = mysql.connector.connect(
   password="8420", # Fill out your MySQL password here
   database='project'
 )
+
 # Create cursor to interact with DB
 mycursor = mydb.cursor()
+
 
 # Executes a query for a list of options
 def executeQuery(query):
@@ -28,6 +30,7 @@ def executeQuery(query):
     except Exception as e:
         print(f"Error occured: {e}")
         return []
+
 
 # Load in the queries.sql file
 def loadQuery():
@@ -55,12 +58,9 @@ def staffInterface(choice):
                 client_id = input('Client ID: ').strip()
                 print('Enter the ISBN of the book to check out:')
                 isbn = input('ISBN: ').strip()
-                print('Enter the Borrow Date of the book to check out:')
+                print('Enter the Borrow Date of the book to check out (YYYY-MM-DD):')
                 borrow_date = input('Borrow Date: ').strip()
-               
-                
 
-                
                 # Check membership type and borrowing limit
                 sql_limit_check = """
                 SELECT COUNT(*) 
@@ -262,7 +262,7 @@ def clientInterface(choice):
             myresult = mycursor.fetchall()
             for x in myresult:
                 print(x)
-    elif choice == 1: # Reserve items
+    elif choice == 1: # Reserve itemsa
         print('Select the # of what to reserve\
               \n\t1) Books\
               \n\t2) Magazines\
